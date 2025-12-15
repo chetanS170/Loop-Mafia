@@ -34,10 +34,24 @@ const Navbar: React.FC = () => {
           'bg-cream/90 dark:bg-[#1A1A1A]/90 shadow-2xl shadow-wheat/20 dark:shadow-black/40 backdrop-blur-xl border border-wheat/50 dark:border-white/5 rounded-full w-full max-w-5xl'}`}>
           
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-             <span className="font-serif text-2xl font-semibold tracking-tight text-charcoal dark:text-wheat group-hover:text-clay transition-colors duration-300">
-               Loop Mafia.
-             </span>
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10 flex-shrink-0">
+              {/* Light Mode Logo */}
+              <img 
+                src="https://drive.google.com/thumbnail?id=15bFQO3-oMeZiZW94CQNQ2NcIziwfRvMT&sz=w200" 
+                alt="Loop Mafia" 
+                className="w-full h-full object-contain block dark:hidden"
+              />
+              {/* Dark Mode Logo */}
+              <img 
+                src="https://drive.google.com/thumbnail?id=1YJyTiiUDxiE1ts2Zn4tKXnMmsu9GNwc0&sz=w200" 
+                alt="Loop Mafia" 
+                className="w-full h-full object-contain hidden dark:block"
+              />
+            </div>
+            <span className="font-serif text-xl font-bold tracking-tight text-charcoal dark:text-wheat group-hover:text-clay transition-colors duration-300">
+              Loop Mafia
+            </span>
           </a>
 
           {/* Desktop Nav */}
