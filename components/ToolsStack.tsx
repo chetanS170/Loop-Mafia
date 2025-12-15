@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu } from 'lucide-react';
+import { Banana } from 'lucide-react';
 
 interface Tool {
   name: string;
@@ -14,9 +14,8 @@ const tools: Tool[] = [
   { name: 'n8n', type: 'svg', slug: 'n8n' },
   { name: 'Vapi', type: 'img', domain: 'vapi.ai' },
   { name: 'Google Cloud', type: 'svg', slug: 'googlecloud' },
-  { name: 'ChatGPT', type: 'svg', slug: 'openai' },
   { name: 'Gemini', type: 'svg', slug: 'googlegemini' },
-  { name: 'Nano Banana', type: 'icon', icon: Cpu }, // Placeholder for custom tool
+  { name: 'Nano Banana', type: 'icon', icon: Banana }, 
   { name: 'OpenRouter', type: 'img', domain: 'openrouter.ai' },
   { name: 'Apify', type: 'img', domain: 'apify.com' },
   { name: 'Apollo', type: 'img', domain: 'apollo.io' }, 
@@ -51,8 +50,8 @@ const ToolsStack: React.FC = () => {
 
       <div className="relative w-full overflow-hidden py-4">
         {/* Fade Masks */}
-        <div className="absolute top-0 left-0 h-full w-24 md:w-64 bg-gradient-to-r from-deep-night to-transparent z-20 pointer-events-none" />
-        <div className="absolute top-0 right-0 h-full w-24 md:w-64 bg-gradient-to-l from-deep-night to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 left-0 h-full w-12 md:w-48 bg-gradient-to-r from-deep-night to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 right-0 h-full w-12 md:w-48 bg-gradient-to-l from-deep-night to-transparent z-20 pointer-events-none" />
 
         {/* Scrolling Container */}
         <div className="flex w-fit animate-scroll-x hover:[animation-play-state:paused] items-center">
@@ -60,27 +59,36 @@ const ToolsStack: React.FC = () => {
           {[...tools, ...tools, ...tools].map((tool, index) => (
             <div 
               key={`${tool.name}-${index}`} 
-              className="flex-shrink-0 mx-8 md:mx-12 group"
+              className="flex-shrink-0 mx-12 md:mx-20 group"
             >
               <div className="flex flex-col items-center gap-4 transition-all duration-500 group-hover:scale-110 cursor-default">
                 
                 {/* Logo Rendering */}
                 <div className="h-12 w-12 md:h-16 md:w-16 flex items-center justify-center relative">
-                  <div className="absolute inset-0 bg-wheat/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {tool.type === 'icon' && tool.icon ? (
-                    <div className="w-full h-full flex items-center justify-center bg-white/5 rounded-xl border border-white/10 group-hover:border-wheat/50 transition-colors">
-                       <tool.icon className="w-8 h-8 text-wheat" />
+                    // Specialized rendering for the Banana Icon (no box, filled)
+                    <div className="relative">
+                       <div className="absolute inset-0 bg-yellow-400/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                       <tool.icon 
+                        className="w-10 h-10 md:w-12 md:h-12 text-[#FFE135] drop-shadow-[0_0_8px_rgba(255,225,53,0.3)]" 
+                        fill="currentColor" 
+                        strokeWidth={1.5}
+                       />
                     </div>
                   ) : (
-                    <img 
-                      src={getSource(tool)}
-                      alt={tool.name}
-                      className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(227,213,202,0.1)] transition-all duration-500 
-                        grayscale brightness-[200%] contrast-[0.5] opacity-70 
-                        group-hover:opacity-100 group-hover:brightness-100 group-hover:grayscale-0 group-hover:contrast-100
-                      `}
-                    />
+                    // Standard rendering for images/svgs
+                    <>
+                      <div className="absolute inset-0 bg-wheat/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <img 
+                        src={getSource(tool)}
+                        alt={tool.name}
+                        className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(227,213,202,0.1)] transition-all duration-500 
+                          grayscale brightness-[200%] contrast-[0.5] opacity-70 
+                          group-hover:opacity-100 group-hover:brightness-100 group-hover:grayscale-0 group-hover:contrast-100
+                        `}
+                      />
+                    </>
                   )}
                 </div>
 

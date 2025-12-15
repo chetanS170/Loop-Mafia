@@ -83,17 +83,56 @@ const CaseStudies: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-16">
+        {/* MOBILE LAYOUT: Stacked Cards */}
+        <div className="flex flex-col gap-12 lg:hidden">
+          {cases.map((item) => (
+             <div key={item.id} className="bg-cream dark:bg-[#1A1A1A] rounded-[2rem] p-6 shadow-xl border border-wheat/20 dark:border-white/5 overflow-hidden">
+                {/* Image */}
+                <div className="relative aspect-video w-full rounded-xl overflow-hidden mb-6">
+                  <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
+                  <div className="absolute bottom-3 right-3 bg-white/90 dark:bg-charcoal/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20 shadow-sm">
+                     <div className="flex items-center gap-2">
+                        <TrendingUp size={14} className="text-green-600 dark:text-green-400" />
+                        <span className="text-xs font-bold text-charcoal dark:text-cream leading-tight">{item.outcome}</span>
+                     </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                     <span className="text-clay font-bold text-xs uppercase tracking-wider">{item.subtitle}</span>
+                  </div>
+                  <h3 className="font-serif text-2xl text-charcoal dark:text-wheat mb-3">{item.title}</h3>
+                  <p className="text-charcoal/70 dark:text-white/60 text-sm leading-relaxed mb-6">
+                     {item.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {item.features.slice(0, 3).map((feature, idx) => (
+                       <span key={idx} className="px-3 py-1 rounded-full bg-white dark:bg-white/5 border border-wheat/20 dark:border-white/10 text-xs text-charcoal/80 dark:text-wheat/80 flex items-center gap-1.5">
+                          <CheckCircle2 size={12} className="text-clay" />
+                          {feature}
+                       </span>
+                    ))}
+                  </div>
+                </div>
+             </div>
+          ))}
+        </div>
+
+        {/* DESKTOP LAYOUT: Sidebar + Content */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-16">
           
-          {/* Navigation - Sidebar on Desktop, Horizontal Scroll on Mobile */}
-          <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 scrollbar-hide snap-x">
+          {/* Sidebar Navigation */}
+          <div className="col-span-4 flex flex-col gap-3">
              {cases.map((item) => {
                const isActive = activeId === item.id;
                return (
                  <button
                    key={item.id}
                    onClick={() => setActiveId(item.id)}
-                   className={`group flex-shrink-0 snap-start w-[85%] sm:w-[60%] lg:w-full text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${
+                   className={`group w-full text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${
                      isActive 
                        ? 'bg-charcoal dark:bg-wheat border-charcoal dark:border-wheat shadow-lg scale-[1.02]' 
                        : 'bg-cream dark:bg-white/5 border-transparent hover:bg-wheat/20 dark:hover:bg-white/10'
@@ -108,7 +147,7 @@ const CaseStudies: React.FC = () => {
                           <item.icon size={24} />
                        </div>
                        {isActive && (
-                         <motion.div layoutId="activeIndicator" className="hidden lg:block">
+                         <motion.div layoutId="activeIndicator">
                             <ChevronRight className="text-wheat dark:text-charcoal" />
                          </motion.div>
                        )}
@@ -129,8 +168,8 @@ const CaseStudies: React.FC = () => {
              })}
           </div>
 
-          {/* Content Display */}
-          <div className="lg:col-span-8 min-h-[500px]">
+          {/* Active Content Display */}
+          <div className="col-span-8 min-h-[500px]">
              <AnimatePresence mode="wait">
                 <motion.div
                   key={activeCase.id}
@@ -138,7 +177,7 @@ const CaseStudies: React.FC = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="bg-cream dark:bg-[#1A1A1A] rounded-[2.5rem] p-2 md:p-3 shadow-2xl border border-wheat/20 dark:border-white/5 h-full flex flex-col"
+                  className="bg-cream dark:bg-[#1A1A1A] rounded-[2.5rem] p-3 shadow-2xl border border-wheat/20 dark:border-white/5 h-full flex flex-col"
                 >
                    {/* Image Area */}
                    <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden mb-6 group">
@@ -150,7 +189,7 @@ const CaseStudies: React.FC = () => {
                       />
                       
                       {/* Floating Stats Card */}
-                      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 bg-white/90 dark:bg-charcoal/90 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-lg max-w-[240px]">
+                      <div className="absolute bottom-8 right-8 z-20 bg-white/90 dark:bg-charcoal/90 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-lg max-w-[240px]">
                          <div className="flex items-center gap-3 mb-2">
                             <div className="p-1.5 bg-green-500/10 rounded-full">
                                <TrendingUp size={16} className="text-green-600 dark:text-green-400" />
@@ -164,7 +203,7 @@ const CaseStudies: React.FC = () => {
                    </div>
 
                    {/* Text Content */}
-                   <div className="px-4 md:px-6 pb-6 flex-1 flex flex-col">
+                   <div className="px-6 pb-6 flex-1 flex flex-col">
                       <div className="mb-8">
                          <h3 className="font-serif text-3xl text-charcoal dark:text-wheat mb-4">
                             {activeCase.title}

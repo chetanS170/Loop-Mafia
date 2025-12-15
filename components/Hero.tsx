@@ -9,10 +9,10 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-48 pb-32 bg-cream dark:bg-deep-night transition-colors duration-500">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-32 md:pt-48 pb-20 md:pb-32 bg-cream dark:bg-deep-night transition-colors duration-500">
       {/* Background Elements */}
-      <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] bg-wheat/30 dark:bg-wheat/5 rounded-full blur-[120px] animate-float transition-colors duration-500" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-clay/10 dark:bg-clay/5 rounded-full blur-[100px] transition-colors duration-500" />
+      <div className="absolute top-[-20%] right-[-10%] w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-wheat/30 dark:bg-wheat/5 rounded-full blur-[80px] md:blur-[120px] animate-float transition-colors duration-500" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-clay/10 dark:bg-clay/5 rounded-full blur-[60px] md:blur-[100px] transition-colors duration-500" />
       
       {/* Mesh Gradient Overlay */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-soft-light dark:mix-blend-overlay"></div>
@@ -26,7 +26,7 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           animate={{ opacity: 1, y: 0 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="cursor-pointer mb-10 group"
+          className="cursor-pointer mb-8 md:mb-10 group"
           role="button"
           aria-label="Toggle dark mode"
         >
@@ -64,10 +64,10 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] text-charcoal dark:text-cream mb-8 tracking-tight transition-colors duration-500"
+          className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] md:leading-[1.05] text-charcoal dark:text-cream mb-6 md:mb-8 tracking-tight transition-colors duration-500 break-words w-full"
         >
-          Automate today. <br />
-          <span className="italic text-clay relative inline-block transition-colors duration-500 pr-4">
+          Automate today. <br className="hidden md:block" />
+          <span className="italic text-clay relative inline-block transition-colors duration-500 pr-4 mt-2 md:mt-0">
             Accelerate tomorrow.
             <svg className="absolute w-full h-2 md:h-3 -bottom-1 left-0 text-wheat opacity-80 dark:opacity-40" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C25.7509 9.37496 90.0003 3.49996 198.001 2.49996" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg>
           </span>
@@ -77,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="font-sans text-lg md:text-xl text-charcoal/80 dark:text-wheat/70 max-w-2xl mb-12 leading-relaxed transition-colors duration-500 font-medium"
+          className="font-sans text-base md:text-xl text-charcoal/80 dark:text-wheat/70 max-w-2xl mb-10 md:mb-12 leading-relaxed transition-colors duration-500 font-medium px-4"
         >
           Loop Mafia transforms manual chaos into automated order. 
           We develop custom AI agents and software in weeks, not months.
@@ -87,13 +87,13 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center w-full justify-center"
+          className="flex flex-col sm:flex-row items-center w-full justify-center px-6"
         >
           <motion.a 
             href="#process"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto relative px-10 py-5 bg-charcoal dark:bg-wheat text-wheat dark:text-charcoal rounded-full shadow-[0_10px_40px_-10px_rgba(44,44,44,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(196,164,132,0.2)] hover:shadow-[0_20px_40px_-10px_rgba(196,164,132,0.4)] transition-all duration-300 flex items-center justify-center font-bold text-lg"
+            className="w-full sm:w-auto relative px-10 py-4 md:py-5 bg-charcoal dark:bg-wheat text-wheat dark:text-charcoal rounded-full shadow-[0_10px_40px_-10px_rgba(44,44,44,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(196,164,132,0.2)] hover:shadow-[0_20px_40px_-10px_rgba(196,164,132,0.4)] transition-all duration-300 flex items-center justify-center font-bold text-base md:text-lg"
           >
             See Our Process
             <ArrowRight className="ml-2 w-5 h-5" />

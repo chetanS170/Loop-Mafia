@@ -30,10 +30,10 @@ function App() {
         <Hero toggleTheme={toggleTheme} isDark={isDark} />
         <Services />
         <Workflow />
-        <ToolsStack />
         <CaseStudies />
         <Testimonials />
         <Booking />
+        <ToolsStack />
       </main>
       <Footer />
     </div>

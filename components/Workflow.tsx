@@ -97,7 +97,7 @@ const Workflow: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-clay/10 dark:bg-wheat/5 rounded-full blur-[100px] pointer-events-none opacity-60 dark:opacity-100" />
       
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20 relative z-10">
+        <div className="text-center mb-16 md:mb-20 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -122,10 +122,10 @@ const Workflow: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
           
-          {/* Left: Radial Engine */}
-          <div className="relative h-[400px] md:h-[500px] flex items-center justify-center select-none">
+          {/* Left: Radial Engine - Scaled for mobile */}
+          <div className="relative h-[400px] md:h-[500px] flex items-center justify-center select-none scale-[0.7] sm:scale-90 md:scale-100 origin-center">
             
             {/* Center Core */}
             <motion.div 
