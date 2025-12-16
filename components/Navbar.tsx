@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-6 inset-x-0 z-50 flex justify-center px-4"
       >
-        <div className={`relative flex items-center justify-between pl-4 pr-2 md:pl-6 py-2.5 transition-all duration-500 ease-out z-50
+        <div className={`relative flex items-center justify-between pl-4 pr-2 md:pl-6 py-2.5 transition-all duration-300 ease-out z-50
           ${mobileMenuOpen ? 'w-full max-w-[95%] bg-transparent' : 
           'bg-cream/90 dark:bg-[#1A1A1A]/90 shadow-2xl shadow-wheat/20 dark:shadow-black/40 backdrop-blur-xl border border-wheat/50 dark:border-white/5 rounded-full w-full max-w-5xl'}`}>
           
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
             }} 
             className={`flex items-center gap-2 md:gap-3 group ${mobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
-            <div className="relative w-10 h-10 flex-shrink-0 rounded-full overflow-hidden border border-wheat/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-inner">
+            <div className="relative w-10 h-10 flex-shrink-0 rounded-full overflow-hidden border border-wheat/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-inner transition-transform duration-300 group-hover:scale-105">
               {/* Light Mode Logo */}
               <img 
                 src="https://drive.google.com/thumbnail?id=15bFQO3-oMeZiZW94CQNQ2NcIziwfRvMT&sz=w200" 
@@ -84,8 +84,8 @@ const Navbar: React.FC = () => {
                 className="w-full h-full object-cover hidden dark:block"
               />
             </div>
-            <span className="font-serif text-lg md:text-xl font-bold tracking-tight text-charcoal dark:text-wheat group-hover:text-clay transition-colors duration-300 whitespace-nowrap">
-              Loop Mafia
+            <span className="font-serif text-lg md:text-xl font-normal tracking-tight text-charcoal dark:text-wheat transition-colors duration-200 whitespace-nowrap">
+              Loop <span className="italic text-clay">Mafia</span>
             </span>
           </a>
 
@@ -96,10 +96,10 @@ const Navbar: React.FC = () => {
                 key={link.name} 
                 href={link.href} 
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium text-charcoal/70 dark:text-wheat/70 hover:text-charcoal dark:hover:text-white transition-colors duration-300 relative group"
+                className="text-sm font-medium text-charcoal/70 dark:text-wheat/70 hover:text-charcoal dark:hover:text-white transition-colors duration-200 relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-clay transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-clay transition-all duration-200 ease-out group-hover:w-full" />
               </a>
             ))}
           </div>
@@ -112,10 +112,10 @@ const Navbar: React.FC = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group px-6 py-2.5 bg-charcoal dark:bg-wheat text-wheat dark:text-charcoal text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(196,164,132,0.3)] transition-all duration-300 flex items-center gap-2"
+              className="group px-6 py-2.5 bg-charcoal dark:bg-wheat text-wheat dark:text-charcoal text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(196,164,132,0.4)] transition-all duration-200 flex items-center gap-2"
             >
               Book a Call
-              <div className="bg-white/20 dark:bg-black/10 rounded-full p-1 group-hover:translate-x-1 transition-transform">
+              <div className="bg-white/20 dark:bg-black/10 rounded-full p-1 group-hover:translate-x-1 transition-transform duration-200">
                 <ArrowRight size={12} className="text-white dark:text-charcoal" />
               </div>
             </motion.a>
@@ -123,7 +123,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className={`md:hidden p-2 rounded-full transition-colors z-50 ${mobileMenuOpen ? 'bg-white/10 text-white' : 'text-charcoal dark:text-wheat bg-charcoal/5 dark:bg-white/10'}`}
+            className={`md:hidden p-2 rounded-full transition-colors duration-200 z-50 ${mobileMenuOpen ? 'bg-white/10 text-white' : 'text-charcoal dark:text-wheat bg-charcoal/5 dark:bg-white/10'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-charcoal dark:bg-deep-night flex flex-col items-center justify-center"
           >
              {/* Background Decoration */}
@@ -150,7 +150,7 @@ const Navbar: React.FC = () => {
                initial="closed"
                animate="open"
                variants={{
-                 open: { transition: { staggerChildren: 0.1 } },
+                 open: { transition: { staggerChildren: 0.05 } },
                  closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
                }}
             >
@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
                     open: { y: 0, opacity: 1 },
                     closed: { y: 20, opacity: 0 }
                   }}
-                  className="text-3xl font-serif text-wheat hover:text-clay transition-colors"
+                  className="text-3xl font-serif text-wheat hover:text-clay transition-colors duration-200"
                 >
                   {link.name}
                 </motion.a>
@@ -180,7 +180,7 @@ const Navbar: React.FC = () => {
                   href="https://cal.com/chetansharma"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-4 text-center bg-wheat text-charcoal rounded-full font-bold text-lg hover:bg-clay transition-colors"
+                  className="block w-full py-4 text-center bg-wheat text-charcoal rounded-full font-bold text-lg hover:bg-clay transition-colors duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Book a Call

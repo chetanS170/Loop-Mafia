@@ -41,10 +41,10 @@ const Booking: React.FC = () => {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="flex items-start gap-4 group"
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-clay group-hover:border-clay transition-colors duration-300">
-                  <Check className="w-4 h-4 text-wheat group-hover:text-charcoal transition-colors" />
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-clay group-hover:border-clay transition-colors duration-200">
+                  <Check className="w-4 h-4 text-wheat group-hover:text-charcoal transition-colors duration-200" />
                 </div>
-                <span className="text-lg text-white/80 font-light pt-0.5 group-hover:text-white transition-colors">
+                <span className="text-lg text-white/80 font-light pt-0.5 group-hover:text-white transition-colors duration-200">
                   {item}
                 </span>
               </motion.div>
@@ -83,10 +83,12 @@ const Booking: React.FC = () => {
                href="https://cal.com/chetansharma"
                target="_blank"
                rel="noopener noreferrer"
-               className="group relative w-full flex items-center justify-center gap-3 py-4 px-8 rounded-full bg-transparent border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal transition-all duration-300 overflow-hidden"
+               className="group relative w-full flex items-center justify-center gap-3 py-4 px-8 rounded-full bg-transparent border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal transition-all duration-200 overflow-hidden hover:scale-105"
              >
                 <span className="font-bold tracking-wide z-10">Book Discovery Call</span>
-                <ArrowRight className="w-5 h-5 z-10 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 z-10 group-hover:translate-x-1 transition-transform duration-200" />
+                
+                {/* Subtle fill effect on hover if desired, or rely on simple bg change */}
              </a>
 
              <p className="mt-6 text-xs text-white/30">

@@ -127,7 +127,7 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: item.delay, duration: 0.5 }}
-      className={`relative flex flex-col p-8 md:p-10 rounded-[2.5rem] transition-all duration-500 group h-full
+      className={`relative flex flex-col p-8 md:p-10 rounded-[2.5rem] transition-all duration-300 group h-full
         ${isPopular 
           ? 'bg-charcoal dark:bg-[#1A1A1A] text-cream dark:text-white lg:-mt-8 lg:mb-8 border-2 border-clay shadow-2xl shadow-clay/20 z-10' 
           : 'bg-white dark:bg-[#141414] text-charcoal dark:text-white border border-wheat/30 dark:border-white/10 shadow-xl shadow-clay/5 hover:border-clay/50 hover:shadow-2xl hover:shadow-clay/10'
@@ -143,7 +143,7 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
 
       {/* Header */}
       <div className="mb-6">
-        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110
+        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110
           ${isPopular 
             ? 'bg-white/10 text-wheat' 
             : 'bg-wheat/20 dark:bg-white/5 text-charcoal dark:text-wheat'
@@ -182,7 +182,7 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
       <div className="mt-auto">
         <a 
           href="#booking"
-          className={`w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300
+          className={`w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-200
             ${isPopular 
               ? 'bg-wheat hover:bg-clay text-charcoal shadow-lg hover:shadow-clay/30 hover:scale-[1.02]' 
               : 'bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 hover:bg-charcoal hover:text-white dark:hover:bg-white dark:hover:text-charcoal group-hover:border-transparent'

@@ -61,14 +61,14 @@ const ToolsStack: React.FC = () => {
               key={`${tool.name}-${index}`} 
               className="flex-shrink-0 mx-12 md:mx-20 group"
             >
-              <div className="flex flex-col items-center gap-4 transition-all duration-500 hover:scale-110 cursor-default">
+              <div className="flex flex-col items-center gap-4 transition-all duration-300 hover:scale-110 cursor-default">
                 
                 {/* Logo Rendering */}
                 <div className="h-12 w-12 md:h-16 md:w-16 flex items-center justify-center relative">
                   
-                  {/* Dynamic Glow for ALL icons - always visible but stronger on hover */}
+                  {/* Dynamic Glow - Hidden by default, appears on hover */}
                   <div 
-                    className="absolute inset-0 blur-xl rounded-full opacity-20 group-hover:opacity-60 transition-opacity duration-500"
+                    className="absolute inset-0 blur-xl rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-300"
                     style={{ backgroundColor: tool.color }}
                   />
 
@@ -86,14 +86,14 @@ const ToolsStack: React.FC = () => {
                       <img 
                         src={getSource(tool)}
                         alt={tool.name}
-                        className="w-full h-full object-contain drop-shadow-md transition-all duration-500"
+                        className="w-full h-full object-contain drop-shadow-md transition-all duration-300"
                       />
                     </div>
                   )}
                 </div>
 
                 <span 
-                  className="text-wheat/60 font-sans font-medium text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0"
+                  className="text-wheat/60 font-sans font-medium text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
                 >
                   {tool.name}
                 </span>

@@ -33,23 +33,26 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 md:mb-12 group"
+          className="mb-8 md:mb-12 group cursor-pointer"
           aria-label="Toggle dark mode"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           <div className={`
             flex items-center gap-3 px-4 py-2.5 
-            rounded-full transition-all duration-300 border
+            rounded-full transition-all duration-200 border
             ${isDark 
-              ? 'bg-white/5 border-white/10 hover:bg-white/10' 
-              : 'bg-white/80 border-charcoal/5 hover:bg-white shadow-sm'
+              ? 'bg-white/5 border-white/10 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]' 
+              : 'bg-white/80 border-charcoal/5 hover:bg-white shadow-sm hover:shadow-md'
             }
           `}>
-             <span className="text-xs font-bold tracking-[0.25em] uppercase text-charcoal/80 dark:text-wheat px-2">
+             <span className="text-xs font-bold tracking-[0.25em] uppercase text-charcoal/80 dark:text-wheat px-2 transition-colors duration-200">
                {isDark ? 'Dark Mode' : 'Light Mode'}
              </span>
-             <div className="relative w-12 h-7 bg-black/5 dark:bg-black/40 rounded-full p-1">
+             <div className="relative w-12 h-7 bg-black/5 dark:bg-black/40 rounded-full p-1 transition-colors duration-200">
                 <motion.div 
                   layout
+                  transition={{ type: "spring", stiffness: 700, damping: 30 }}
                   className={`w-5 h-5 rounded-full shadow-sm flex items-center justify-center ${isDark ? 'bg-wheat ml-auto' : 'bg-charcoal'}`}
                 >
                    {isDark ? <Moon size={10} className="text-charcoal" /> : <Sun size={10} className="text-wheat" />}
@@ -62,7 +65,7 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-serif text-5xl sm:text-6xl md:text-8xl leading-[1.1] text-charcoal dark:text-cream mb-8 tracking-tight"
+          className="font-serif text-5xl sm:text-6xl md:text-8xl leading-[1.1] text-charcoal dark:text-cream mb-8 tracking-tight drop-shadow-2xl"
         >
           Automate today. <br className="hidden md:block" />
           <span className="italic text-clay relative inline-block">
@@ -75,7 +78,7 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-sans text-lg md:text-2xl text-charcoal/80 dark:text-wheat/70 max-w-2xl mb-12 leading-relaxed font-medium px-4"
+          className="font-sans text-lg md:text-2xl text-charcoal/80 dark:text-wheat/70 max-w-2xl mb-12 leading-relaxed font-medium px-4 drop-shadow-sm"
         >
           Loop Mafia transforms manual chaos into automated order. 
           We develop custom AI agents and software in weeks, not months.
@@ -90,14 +93,18 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
             href="#process"
             className={`
               group relative px-10 py-5 rounded-full overflow-hidden transition-all duration-300 inline-flex items-center gap-3 font-bold text-lg tracking-wide
+              transform hover:scale-105 active:scale-95
               ${isDark 
-                ? 'bg-wheat text-charcoal hover:bg-clay hover:shadow-lg' 
-                : 'bg-charcoal text-wheat hover:shadow-xl'
+                ? 'bg-wheat text-charcoal shadow-[0_0_20px_rgba(227,213,202,0.3)] hover:shadow-[0_0_30px_rgba(227,213,202,0.5)]' 
+                : 'bg-charcoal text-wheat shadow-xl hover:shadow-2xl'
               }
             `}
           >
-             <span>See Our Process</span>
-             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+             {/* Shimmer Effect */}
+             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/40 to-transparent z-10" />
+
+             <span className="relative z-20">See Our Process</span>
+             <ArrowRight className="w-5 h-5 relative z-20 group-hover:translate-x-1 transition-transform duration-200" />
           </a>
         </motion.div>
       </div>
