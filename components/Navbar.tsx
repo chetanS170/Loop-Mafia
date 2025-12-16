@@ -112,11 +112,11 @@ const Navbar: React.FC = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group px-6 py-2.5 bg-charcoal dark:bg-wheat text-wheat dark:text-charcoal text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(196,164,132,0.4)] transition-all duration-200 flex items-center gap-2"
+              className="group px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-200 flex items-center gap-2 border border-charcoal/10 dark:border-wheat/20 bg-transparent hover:bg-charcoal dark:hover:bg-wheat text-charcoal dark:text-wheat hover:text-wheat dark:hover:text-charcoal"
             >
               Book a Call
-              <div className="bg-white/20 dark:bg-black/10 rounded-full p-1 group-hover:translate-x-1 transition-transform duration-200">
-                <ArrowRight size={12} className="text-white dark:text-charcoal" />
+              <div className="group-hover:translate-x-1 transition-transform duration-200">
+                <ArrowRight size={14} />
               </div>
             </motion.a>
           </div>
@@ -180,7 +180,7 @@ const Navbar: React.FC = () => {
                   href="https://cal.com/chetansharma"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-4 text-center bg-wheat text-charcoal rounded-full font-bold text-lg hover:bg-clay transition-colors duration-200"
+                  className="block w-full py-4 text-center border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal rounded-full font-bold text-lg transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Book a Call

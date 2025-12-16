@@ -21,8 +21,6 @@ export const HeroGridBackground: React.FC = () => {
     mediaQuery.addEventListener('change', updateHoverState);
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Get relative coordinates if needed, but clientX/Y usually works for fixed backgrounds
-      // For absolute positioned full screen elements, clientX/Y is good.
       const rect = document.body.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -31,7 +29,6 @@ export const HeroGridBackground: React.FC = () => {
       mouseY.set(y);
     };
 
-    // Add mouse listener if applicable
     if (mediaQuery.matches) {
       window.addEventListener('mousemove', handleMouseMove);
     }
@@ -44,23 +41,24 @@ export const HeroGridBackground: React.FC = () => {
 
   // Memoize SVG URI to prevent recreation on every render
   const gridSvg = useMemo(() => {
+    // Grid size 40x40.
+    // Dot at 0,0 (top-left corner). Since it repeats, this covers all intersections.
     const svgContent = encodeURIComponent(`
       <svg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'>
         <path d='M0 0h40v40H0z' fill='none' stroke='currentColor' stroke-width='0.5' opacity='1'/>
         <path d='M40 0V40M0 40H40' stroke='currentColor' stroke-width='0.5' opacity='1'/>
-        <circle cx="20" cy="20" r="1" fill="currentColor" opacity="0.5"/> 
+        <circle cx="0" cy="0" r="1.5" fill="currentColor" opacity="0.8"/>
       </svg>
     `.trim());
     return `url("data:image/svg+xml;charset=utf-8,${svgContent}")`;
   }, []);
 
-  // Smoother, larger spotlight
   const maskImageValue = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
       
-      {/* Base Grid - Faded edges/corners */}
+      {/* Base Grid - Steady */}
       <div 
          className="absolute inset-0 z-0"
          style={{
@@ -68,27 +66,16 @@ export const HeroGridBackground: React.FC = () => {
            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 85%)'
          }}
       >
-        <motion.div
-          className="absolute inset-[-50%] w-[200%] h-[200%] text-charcoal/10 dark:text-wheat/10"
-          initial={{ x: 0, y: 0 }}
-          animate={{ x: -40, y: -40 }}
-          transition={{
-            repeat: Infinity,
-            duration: 40,
-            ease: 'linear',
-          }}
+        <div
+          className="absolute inset-0 w-full h-full text-charcoal/10 dark:text-wheat/10"
           style={{
             maskImage: gridSvg,
             WebkitMaskImage: gridSvg,
             maskSize: '40px 40px',
             WebkitMaskSize: '40px 40px',
-            backgroundColor: 'transparent' // Ensure bg is transparent so stroke works with mask
+            backgroundColor: 'transparent'
           }}
         >
-           {/* We use CSS background-image for the grid pattern via style prop below to allow currentColor inheritance context if possible, 
-               but masking is better for pure color control via bg color of parent. 
-               Actually, simpler approach: set background color of this div to the grid color, apply mask. 
-           */}
            <div className="w-full h-full bg-charcoal/10 dark:bg-wheat/10" 
                 style={{ 
                   mask: gridSvg, 
@@ -97,7 +84,7 @@ export const HeroGridBackground: React.FC = () => {
                   WebkitMaskSize: '40px 40px' 
                 }} 
            />
-        </motion.div>
+        </div>
       </div>
 
       {/* Interactive Sparkle Grid */}
@@ -109,15 +96,8 @@ export const HeroGridBackground: React.FC = () => {
             WebkitMaskImage: maskImageValue,
           }}
         >
-          <motion.div
-             className="absolute inset-[-50%] w-[200%] h-[200%]"
-             initial={{ x: 0, y: 0 }}
-             animate={{ x: -40, y: -40 }}
-             transition={{
-               repeat: Infinity,
-               duration: 40,
-               ease: 'linear',
-             }}
+          <div
+             className="absolute inset-0 w-full h-full"
           >
              {/* Brighter, glowing grid lines */}
              <div className="w-full h-full bg-clay dark:bg-wheat" 
@@ -130,11 +110,11 @@ export const HeroGridBackground: React.FC = () => {
                     filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.5))'
                   }} 
              />
-          </motion.div>
+          </div>
         </motion.div>
       )}
 
-      {/* Extra vignette to really soften corners as requested */}
+      {/* Vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0)_60%,rgba(var(--bg-color),1)_100%)] pointer-events-none" />
     </div>
   );

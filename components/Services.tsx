@@ -182,10 +182,10 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
       <div className="mt-auto">
         <a 
           href="#booking"
-          className={`w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-200
+          className={`w-full py-3.5 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-200 border hover:scale-105
             ${isPopular 
-              ? 'bg-wheat hover:bg-clay text-charcoal shadow-lg hover:shadow-clay/30 hover:scale-[1.02]' 
-              : 'bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 hover:bg-charcoal hover:text-white dark:hover:bg-white dark:hover:text-charcoal group-hover:border-transparent'
+              ? 'bg-transparent border-wheat/50 text-wheat hover:bg-wheat hover:text-charcoal' 
+              : 'bg-transparent border-charcoal/10 dark:border-white/10 hover:bg-charcoal dark:hover:bg-wheat text-charcoal dark:text-white hover:text-wheat dark:hover:text-charcoal'
             }`}
         >
           {item.cta}

@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
           
           {/* Brand Column */}
-          <div className="col-span-1 md:col-span-5 pr-8">
+          <div className="col-span-1 md:col-span-5 md:pr-8">
              <a href="#" className="inline-block mb-6 group">
                 <span className="font-serif text-3xl md:text-4xl font-normal text-wheat">Loop <span className="italic text-clay">Mafia.</span></span>
              </a>
@@ -54,19 +54,22 @@ const Footer: React.FC = () => {
           {/* CTA Column */}
           <div className="col-span-1 md:col-span-2">
              <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-clay mb-6">Start Now</h4>
-             <a href="#booking" className="group flex items-center gap-2 text-wheat hover:text-white transition-colors">
-                <span className="text-lg font-medium border-b border-wheat/30 group-hover:border-white pb-0.5">Book a Call</span>
-                <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+             <a 
+                href="#booking" 
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal transition-all duration-200 hover:scale-105"
+             >
+                <span className="text-sm font-bold">Book a Call</span>
+                <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
              </a>
           </div>
         </div>
         
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/20 font-medium tracking-wide">
-          <p>© 2024 Loop Mafia Inc.</p>
-          <div className="flex items-center gap-6">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-white/20 font-medium tracking-wide">
+          <p className="order-2 md:order-1">© 2024 Loop Mafia Inc.</p>
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 order-1 md:order-2">
              <span>San Francisco, CA</span>
-             <span className="w-1 h-1 rounded-full bg-white/20" />
+             <span className="hidden md:inline w-1 h-1 rounded-full bg-white/20" />
              <span>Designed with Intelligence</span>
           </div>
         </div>
