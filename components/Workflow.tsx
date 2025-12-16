@@ -97,7 +97,7 @@ const Workflow: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-clay/10 dark:bg-wheat/5 rounded-full blur-[100px] pointer-events-none opacity-60 dark:opacity-100" />
       
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 md:mb-20 relative z-10">
+        <div className="text-center mb-16 md:mb-24 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -122,10 +122,10 @@ const Workflow: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* Left: Radial Engine - Scaled for mobile */}
-          <div className="relative h-[400px] md:h-[500px] flex items-center justify-center select-none scale-[0.7] sm:scale-90 md:scale-100 origin-center">
+          {/* Left: Radial Engine */}
+          <div className="relative h-[400px] sm:h-[500px] md:h-[600px] flex items-center justify-center select-none origin-center scale-[0.85] sm:scale-100 lg:scale-110">
             
             {/* Center Core */}
             <motion.div 
@@ -133,16 +133,17 @@ const Workflow: React.FC = () => {
                 boxShadow: ['0 0 20px rgba(196,164,132,0.2)', '0 0 60px rgba(196,164,132,0.4)', '0 0 20px rgba(196,164,132,0.2)'] 
               }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute z-20 w-24 h-24 md:w-32 md:h-32 rounded-full bg-white dark:bg-[#141414] border border-wheat/40 dark:border-wheat/20 flex items-center justify-center shadow-2xl"
+              className="absolute z-20 w-32 h-32 md:w-40 md:h-40 rounded-full bg-white dark:bg-[#141414] border border-wheat/40 dark:border-wheat/20 flex items-center justify-center shadow-2xl"
             >
                <div className="absolute inset-0 rounded-full border border-clay/30 animate-ping opacity-20" />
-               <Zap className="w-8 h-8 md:w-10 md:h-10 text-clay" fill="currentColor" fillOpacity={0.2} />
+               <Zap className="w-10 h-10 md:w-14 md:h-14 text-clay" fill="currentColor" fillOpacity={0.2} />
             </motion.div>
 
             {/* Connecting Lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
                {steps.map((step, index) => {
-                 const radius = 160; 
+                 // Responsive radius calculation roughly handled by CSS scaling, but base logic remains
+                 const radius = 180; 
                  const pos = getPosition(index, steps.length, radius);
                  const isActive = activeStep === index;
                  return (
@@ -153,7 +154,7 @@ const Workflow: React.FC = () => {
                        x2={`calc(50% + ${pos.x}px)`} 
                        y2={`calc(50% + ${pos.y}px)`} 
                        className="stroke-charcoal/10 dark:stroke-white/5"
-                       strokeWidth="1"
+                       strokeWidth="2"
                      />
                      <motion.line 
                        x1="50%" 
@@ -161,14 +162,14 @@ const Workflow: React.FC = () => {
                        x2={`calc(50% + ${pos.x}px)`} 
                        y2={`calc(50% + ${pos.y}px)`} 
                        stroke="#C4A484"
-                       strokeWidth={isActive ? 2 : 0}
+                       strokeWidth={isActive ? 3 : 0}
                        strokeLinecap="round"
                        initial={{ pathLength: 0, opacity: 0 }}
                        animate={{ 
                          pathLength: isActive ? 1 : 0, 
                          opacity: isActive ? 1 : 0 
                        }}
-                       transition={{ duration: 0.5, ease: "circOut" }}
+                       transition={{ duration: 0.6, ease: "easeInOut" }}
                      />
                    </g>
                  );
@@ -177,7 +178,7 @@ const Workflow: React.FC = () => {
 
             {/* Nodes */}
             {steps.map((step, index) => {
-              const radius = 160; 
+              const radius = 180; 
               const pos = getPosition(index, steps.length, radius);
               const isActive = activeStep === index;
 
@@ -187,28 +188,29 @@ const Workflow: React.FC = () => {
                   onClick={() => setActiveStep(index)}
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
                   viewport={{ once: true }}
-                  className={`absolute z-30 w-16 h-16 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center transition-all duration-500 cursor-pointer border outline-none
+                  className={`absolute z-30 w-20 h-20 md:w-24 md:h-24 rounded-full flex flex-col items-center justify-center transition-all duration-500 cursor-pointer border outline-none
                     ${isActive 
-                      ? 'bg-wheat text-charcoal border-wheat scale-110 shadow-xl z-40' 
+                      ? 'bg-wheat text-charcoal border-wheat scale-110 shadow-[0_0_30px_rgba(227,213,202,0.4)] z-40' 
                       : 'bg-white dark:bg-[#1A1A1A] text-charcoal/40 dark:text-white/30 border-charcoal/10 dark:border-white/10 hover:border-clay/50 hover:text-clay hover:scale-105'
                     }
                   `}
                   style={{ 
                     left: `calc(50% + ${pos.x}px)`, 
                     top: `calc(50% + ${pos.y}px)`,
-                    marginLeft: '-2.5rem', 
-                    marginTop: '-2.5rem'
+                    marginLeft: activeStep === index ? '-3rem' : '-2.5rem', // Adjust offsets based on active size vs normal size if needed, mostly handled by w/h classes + flex centering
+                    marginTop: activeStep === index ? '-3rem' : '-2.5rem',
+                    transform: 'translate(-50%, -50%)' // Ensure centering
                   }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <step.icon size={22} strokeWidth={isActive ? 2.5 : 2} className="mb-1" />
+                  <step.icon size={28} strokeWidth={isActive ? 2.5 : 2} className="mb-1 md:w-8 md:h-8" />
                   {isActive && (
                     <motion.span 
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
-                      className="text-[9px] font-bold uppercase tracking-wider"
+                      className="text-[10px] md:text-xs font-bold uppercase tracking-wider"
                     >
                       {step.stepNumber}
                     </motion.span>
@@ -226,17 +228,17 @@ const Workflow: React.FC = () => {
                  initial={{ opacity: 0, x: 50 }}
                  animate={{ opacity: 1, x: 0 }}
                  exit={{ opacity: 0, x: -50 }}
-                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                 className="w-full bg-white dark:bg-[#141414]/80 backdrop-blur-xl border border-charcoal/5 dark:border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group"
+                 transition={{ duration: 0.4, ease: "circOut" }}
+                 className="w-full bg-white dark:bg-[#141414]/80 backdrop-blur-xl border border-charcoal/5 dark:border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group"
                >
                   {/* Step Number Background */}
-                  <div className="absolute -bottom-10 -right-4 text-[10rem] font-serif text-charcoal/[0.03] dark:text-white/[0.02] pointer-events-none leading-none select-none">
+                  <div className="absolute -bottom-10 -right-4 text-[12rem] font-serif text-charcoal/[0.03] dark:text-white/[0.02] pointer-events-none leading-none select-none">
                     {steps[activeStep].stepNumber}
                   </div>
 
-                  <div className="flex justify-between items-start mb-6 relative z-10">
+                  <div className="flex justify-between items-start mb-8 relative z-10">
                      <div>
-                        <div className="flex items-center gap-3 mb-3">
+                        <div className="flex items-center gap-3 mb-4">
                            <span className="text-clay font-bold tracking-widest text-xs uppercase">
                              Step {steps[activeStep].stepNumber}
                            </span>
@@ -245,31 +247,31 @@ const Workflow: React.FC = () => {
                              {steps[activeStep].goal}
                            </span>
                         </div>
-                        <h3 className="font-serif text-3xl md:text-4xl text-charcoal dark:text-cream leading-tight">
+                        <h3 className="font-serif text-3xl md:text-5xl text-charcoal dark:text-cream leading-tight">
                            {steps[activeStep].title}
                         </h3>
                      </div>
                   </div>
 
-                  <div className="h-px w-full bg-gradient-to-r from-clay/30 to-transparent mb-6" />
+                  <div className="h-px w-full bg-gradient-to-r from-clay/30 to-transparent mb-8" />
 
-                  <div className="relative z-10 space-y-6">
-                    <p className="text-charcoal/70 dark:text-white/70 text-lg leading-relaxed font-medium">
+                  <div className="relative z-10 space-y-8">
+                    <p className="text-charcoal/70 dark:text-white/70 text-lg md:text-xl leading-relaxed font-medium">
                       {steps[activeStep].description}
                     </p>
 
-                    <div className="bg-charcoal/5 dark:bg-white/5 border border-charcoal/5 dark:border-white/5 rounded-xl p-4 flex items-start gap-3">
-                      <div className="mt-1 p-1 bg-green-500/20 rounded-full">
-                         <CheckCircle2 size={14} className="text-green-600 dark:text-green-400" />
+                    <div className="bg-charcoal/5 dark:bg-white/5 border border-charcoal/5 dark:border-white/5 rounded-2xl p-6 flex items-start gap-4">
+                      <div className="mt-1 p-1.5 bg-green-500/20 rounded-full">
+                         <CheckCircle2 size={18} className="text-green-600 dark:text-green-400" />
                       </div>
                       <div>
                         <span className="block text-xs uppercase text-charcoal/40 dark:text-white/30 font-bold tracking-wider mb-1">Deliverable</span>
-                        <span className="text-charcoal dark:text-cream font-medium">{steps[activeStep].deliverable}</span>
+                        <span className="text-charcoal dark:text-cream font-bold text-lg">{steps[activeStep].deliverable}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mt-8 relative z-10">
+                  <div className="flex flex-wrap gap-2 mt-10 relative z-10">
                      {steps[activeStep].tags.map((tag, i) => (
                         <span key={i} className="px-3 py-1.5 rounded-lg bg-charcoal/5 dark:bg-black/40 border border-charcoal/5 dark:border-white/10 text-xs text-charcoal/60 dark:text-wheat/60 font-bold">
                            # {tag}
@@ -280,15 +282,15 @@ const Workflow: React.FC = () => {
                   <div className="absolute bottom-0 right-0 p-8 flex gap-3 z-20">
                      <button 
                        onClick={handlePrev}
-                       className="w-10 h-10 rounded-full border border-charcoal/10 dark:border-white/10 flex items-center justify-center text-charcoal/40 dark:text-white/40 hover:bg-charcoal/5 dark:hover:bg-white/10 transition-all"
+                       className="w-12 h-12 rounded-full border border-charcoal/10 dark:border-white/10 flex items-center justify-center text-charcoal/40 dark:text-white/40 hover:bg-charcoal/5 dark:hover:bg-white/10 transition-all"
                      >
-                        <ArrowLeft size={18} />
+                        <ArrowLeft size={20} />
                      </button>
                      <button 
                        onClick={handleNext}
-                       className="w-10 h-10 rounded-full bg-wheat text-charcoal flex items-center justify-center hover:bg-clay transition-all shadow-md hover:scale-105"
+                       className="w-12 h-12 rounded-full bg-wheat text-charcoal flex items-center justify-center hover:bg-clay transition-all shadow-md hover:scale-105"
                      >
-                        <ArrowRight size={18} />
+                        <ArrowRight size={20} />
                      </button>
                   </div>
                </motion.div>

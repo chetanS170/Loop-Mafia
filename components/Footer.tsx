@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-5 pr-8">
              <a href="#" className="inline-block mb-6 group">
-                <span className="font-serif text-3xl md:text-4xl font-semibold text-wheat">Loop <span className="italic text-clay">Mafia.</span></span>
+                <span className="font-serif text-3xl md:text-4xl font-normal text-wheat">Loop <span className="italic text-clay">Mafia.</span></span>
              </a>
              <p className="text-white/50 text-base leading-relaxed mb-8 max-w-sm">
                Engineering the future of work with custom AI agents and automation infrastructures.
@@ -75,13 +75,38 @@ const Footer: React.FC = () => {
   );
 };
 
-const FooterLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-  <li>
-    <a href={href} className="text-white/60 hover:text-wheat transition-colors text-sm font-medium">
-      {children}
-    </a>
-  </li>
-);
+const FooterLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  return (
+    <li>
+      <a 
+        href={href} 
+        onClick={handleClick}
+        className="text-white/60 hover:text-wheat transition-colors text-sm font-medium"
+      >
+        {children}
+      </a>
+    </li>
+  );
+};
 
 const SocialLink: React.FC<{ icon: React.ElementType; href: string }> = ({ icon: Icon, href }) => (
   <a href={href} className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center hover:bg-wheat hover:text-charcoal hover:border-wheat transition-all duration-300">

@@ -23,6 +23,27 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  // Smooth Scroll Handler
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        setMobileMenuOpen(false);
+        const offset = 80; // Approximate navbar height
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
   const navLinks = [
     { name: 'Services', href: '#services' },
     { name: 'Process', href: '#process' },
@@ -43,24 +64,28 @@ const Navbar: React.FC = () => {
           'bg-cream/90 dark:bg-[#1A1A1A]/90 shadow-2xl shadow-wheat/20 dark:shadow-black/40 backdrop-blur-xl border border-wheat/50 dark:border-white/5 rounded-full w-full max-w-5xl'}`}>
           
           {/* Logo */}
-          <a href="#" className={`flex items-center gap-3 group ${mobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-            <div className="relative w-10 h-10 flex-shrink-0 rounded-full overflow-hidden border border-wheat/20 dark:border-white/10 shadow-inner">
-              {/* Swapped Links per user request */}
+          <a href="#" onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }} 
+            className={`flex items-center gap-2 md:gap-3 group ${mobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <div className="relative w-10 h-10 flex-shrink-0 rounded-full overflow-hidden border border-wheat/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-inner">
               {/* Light Mode Logo */}
               <img 
-                src="https://i.ibb.co/fj883PC/logo-light.jpg" 
+                src="https://drive.google.com/thumbnail?id=15bFQO3-oMeZiZW94CQNQ2NcIziwfRvMT&sz=w200" 
                 alt="Loop Mafia" 
-                className="w-full h-full object-cover block dark:hidden scale-110"
+                className="w-full h-full object-cover block dark:hidden"
               />
               {/* Dark Mode Logo */}
               <img 
-                src="https://i.ibb.co/DgKx3X43/logo-dark.jpg" 
+                src="https://drive.google.com/thumbnail?id=1YJyTiiUDxiE1ts2Zn4tKXnMmsu9GNwc0&sz=w200" 
                 alt="Loop Mafia" 
-                className="w-full h-full object-cover hidden dark:block scale-110"
+                className="w-full h-full object-cover hidden dark:block"
               />
             </div>
-            <span className="font-serif text-lg md:text-xl font-medium tracking-tight text-charcoal dark:text-wheat transition-colors duration-300 whitespace-nowrap">
-              Loop <span className="italic text-clay">Mafia</span>
+            <span className="font-serif text-lg md:text-xl font-bold tracking-tight text-charcoal dark:text-wheat group-hover:text-clay transition-colors duration-300 whitespace-nowrap">
+              Loop Mafia
             </span>
           </a>
 
@@ -70,6 +95,7 @@ const Navbar: React.FC = () => {
               <a 
                 key={link.name} 
                 href={link.href} 
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-sm font-medium text-charcoal/70 dark:text-wheat/70 hover:text-charcoal dark:hover:text-white transition-colors duration-300 relative group"
               >
                 {link.name}
@@ -132,12 +158,12 @@ const Navbar: React.FC = () => {
                 <motion.a 
                   key={link.name} 
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   variants={{
                     open: { y: 0, opacity: 1 },
                     closed: { y: 20, opacity: 0 }
                   }}
                   className="text-3xl font-serif text-wheat hover:text-clay transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </motion.a>
