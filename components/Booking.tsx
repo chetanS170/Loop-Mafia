@@ -107,7 +107,7 @@ const Booking: React.FC = () => {
              </p>
 
              <a 
-               href="https://cal.com/chetansharma"
+               href="https://cal.com/chetansharma-loopmafia"
                target="_blank"
                rel="noopener noreferrer"
                className="group relative w-full flex items-center justify-center gap-3 py-4 px-8 rounded-full bg-transparent border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal transition-all duration-200 overflow-hidden hover:scale-105"

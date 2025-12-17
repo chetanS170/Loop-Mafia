@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             <motion.a 
-              href="https://cal.com/chetansharma"
+              href="https://cal.com/chetansharma-loopmafia"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -177,7 +177,7 @@ const Navbar: React.FC = () => {
                 className="w-full pt-8"
               >
                  <a 
-                  href="https://cal.com/chetansharma"
+                  href="https://cal.com/chetansharma-loopmafia"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full py-4 text-center border border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal rounded-full font-bold text-lg transition-all duration-200"
