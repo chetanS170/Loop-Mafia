@@ -1,48 +1,57 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 export const HeroGridBackground: React.FC = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isHoverDevice, setIsHoverDevice] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Check media query safely
+    // Only track mouse on devices that support hover
     const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
     
-    const updateHoverState = () => {
-      setIsHoverDevice(mediaQuery.matches);
+    const updateMouse = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
     };
-    
+
+    const animate = () => {
+      if (containerRef.current) {
+        // Update CSS variables directly for performance (avoids React re-renders)
+        containerRef.current.style.setProperty('--mouse-x', `${mouseRef.current.x}px`);
+        containerRef.current.style.setProperty('--mouse-y', `${mouseRef.current.y}px`);
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (e.matches) {
+        window.addEventListener('mousemove', updateMouse);
+        rafRef.current = requestAnimationFrame(animate);
+      } else {
+        window.removeEventListener('mousemove', updateMouse);
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      }
+    };
+
     // Initial check
-    updateHoverState();
+    handleMediaChange(mediaQuery);
 
-    // Listen for environment changes
-    mediaQuery.addEventListener('change', updateHoverState);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = document.body.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      mouseX.set(x);
-      mouseY.set(y);
-    };
-
-    if (mediaQuery.matches) {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
+    // Listener for changes
+    mediaQuery.addEventListener('change', handleMediaChange);
 
     return () => {
-      mediaQuery.removeEventListener('change', updateHoverState);
-      window.removeEventListener('mousemove', handleMouseMove);
+      mediaQuery.removeEventListener('change', handleMediaChange);
+      window.removeEventListener('mousemove', updateMouse);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [mouseX, mouseY]);
+  }, []);
 
-  // Memoize SVG URI to prevent recreation on every render
+  // Memoize SVG URI to prevent recreation
   const gridSvg = useMemo(() => {
-    // Grid size 40x40.
-    // Dot at 0,0 (top-left corner). Since it repeats, this covers all intersections.
     const svgContent = encodeURIComponent(`
       <svg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'>
         <path d='M0 0h40v40H0z' fill='none' stroke='currentColor' stroke-width='0.5' opacity='1'/>
@@ -53,10 +62,16 @@ export const HeroGridBackground: React.FC = () => {
     return `url("data:image/svg+xml;charset=utf-8,${svgContent}")`;
   }, []);
 
-  const maskImageValue = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
-
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+    <div 
+      ref={containerRef} 
+      className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0 transform-gpu"
+      style={{
+        // Initialize variables off-screen to prevent flash
+        '--mouse-x': '-1000px',
+        '--mouse-y': '-1000px',
+      } as React.CSSProperties}
+    >
       
       {/* Base Grid - Steady */}
       <div 
@@ -87,35 +102,33 @@ export const HeroGridBackground: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Sparkle Grid */}
-      {isHoverDevice && (
-        <motion.div
-          className="absolute inset-0 z-10 mix-blend-screen"
-          style={{
-            maskImage: maskImageValue,
-            WebkitMaskImage: maskImageValue,
-          }}
+      {/* Interactive Sparkle Grid - GPU Accelerated Mask */}
+      <div
+        className="absolute inset-0 z-10 mix-blend-screen will-change-[mask-image]"
+        style={{
+          maskImage: 'radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black, transparent)',
+          WebkitMaskImage: 'radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black, transparent)',
+        }}
+      >
+        <div
+           className="absolute inset-0 w-full h-full"
         >
-          <div
-             className="absolute inset-0 w-full h-full"
-          >
-             {/* Brighter, glowing grid lines */}
-             <div className="w-full h-full bg-clay dark:bg-wheat" 
-                  style={{ 
-                    mask: gridSvg, 
-                    WebkitMask: gridSvg,
-                    maskSize: '40px 40px',
-                    WebkitMaskSize: '40px 40px',
-                    opacity: 0.6,
-                    filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.5))'
-                  }} 
-             />
-          </div>
-        </motion.div>
-      )}
+           {/* Brighter, glowing grid lines */}
+           <div className="w-full h-full bg-clay dark:bg-wheat" 
+                style={{ 
+                  mask: gridSvg, 
+                  WebkitMask: gridSvg,
+                  maskSize: '40px 40px',
+                  WebkitMaskSize: '40px 40px',
+                  opacity: 0.6,
+                  filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.5))'
+                }} 
+           />
+        </div>
+      </div>
 
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0)_60%,rgba(var(--bg-color),1)_100%)] pointer-events-none" />
+      {/* Vignette - Blends to Cream (Light) or Deep Night (Dark) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#FDFBF7_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,#0A0A0A_100%)] pointer-events-none opacity-80" />
     </div>
   );
 };

@@ -170,10 +170,10 @@ const Workflow: React.FC = () => {
                     <motion.button
                        key={step.id}
                        onClick={() => handleStepClick(index)}
-                       className={`absolute w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-500 z-20 group outline-none
+                       className={`absolute w-16 h-16 rounded-full flex items-center justify-center border transition-all duration-500 z-20 group outline-none
                          ${isActive 
                            ? 'bg-clay border-clay text-white shadow-[0_0_30px_rgba(196,164,132,0.4)] scale-110' 
-                           : 'bg-cream dark:bg-[#141414] border-wheat/30 dark:border-white/10 text-charcoal/40 dark:text-white/30 hover:border-clay hover:text-clay'
+                           : 'bg-charcoal border-white/10 text-wheat shadow-[inset_0_-2px_4px_rgba(255,255,255,0.1)] hover:border-clay hover:text-clay'
                          }
                        `}
                        style={{
@@ -223,9 +223,11 @@ const Workflow: React.FC = () => {
                   `}
                   onClick={() => handleStepClick(index)}
                >
-                  {/* Node on Line */}
+                  {/* Node on Line - Updated to match premium dark style */}
                   <div className={`absolute left-4 top-8 w-8 h-8 rounded-full flex items-center justify-center border transition-colors duration-300 z-10
-                     ${isActive ? 'bg-clay border-clay text-white shadow-lg' : 'bg-cream dark:bg-[#141414] border-charcoal/10 dark:border-white/10 text-charcoal/30 dark:text-white/30'}
+                     ${isActive 
+                       ? 'bg-clay border-clay text-white shadow-lg' 
+                       : 'bg-charcoal border-white/10 text-wheat shadow-[inset_0_-2px_4px_rgba(255,255,255,0.1)]'}
                   `}>
                      <span className="text-xs font-bold">{step.stepNumber}</span>
                   </div>

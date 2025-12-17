@@ -143,13 +143,13 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
 
       {/* Header */}
       <div className="mb-6">
-        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110
-          ${isPopular 
-            ? 'bg-white/10 text-wheat' 
-            : 'bg-wheat/20 dark:bg-white/5 text-charcoal dark:text-wheat'
-          }`}
+        {/* Shimmer-style Icon Container */}
+        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 
+          bg-charcoal text-wheat border border-white/10 shadow-[inset_0_-4px_4px_rgba(255,255,255,0.1)]
+          ${isPopular ? 'shadow-[inset_0_-4px_8px_rgba(196,164,132,0.2)] border-clay/30' : ''}
+          `}
         >
-          <item.icon size={28} />
+          <item.icon size={28} className="drop-shadow-md" />
         </div>
         
         <h3 className={`font-serif text-3xl mb-2 ${isPopular ? 'text-wheat' : 'text-charcoal dark:text-wheat'}`}>

@@ -139,10 +139,10 @@ const CaseStudies: React.FC = () => {
                    }`}
                  >
                     <div className="flex items-start justify-between mb-4">
-                       <div className={`p-3 rounded-xl transition-colors ${
+                       <div className={`p-3 rounded-xl transition-colors border ${
                          isActive 
-                           ? 'bg-wheat/20 dark:bg-charcoal/10 text-wheat dark:text-charcoal' 
-                           : 'bg-white/50 dark:bg-white/5 text-charcoal/60 dark:text-wheat/60'
+                           ? 'bg-wheat/20 dark:bg-charcoal/10 text-wheat dark:text-charcoal border-transparent' 
+                           : 'bg-charcoal text-wheat border-white/10 shadow-[inset_0_-2px_4px_rgba(255,255,255,0.1)]'
                        }`}>
                           <item.icon size={24} />
                        </div>

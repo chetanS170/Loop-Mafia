@@ -43,6 +43,7 @@
               'scroll-x-reverse': 'scroll-x-reverse 80s linear infinite',
               "shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate",
               "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+              "spin-continuous": "spin-continuous var(--speed) infinite linear",
             },
             keyframes: {
               float: {
@@ -69,6 +70,10 @@
                 "0%": { transform: "translateZ(0) rotate(0)" },
                 "15%, 35%": { transform: "translateZ(0) rotate(90deg)" },
                 "65%, 85%": { transform: "translateZ(0) rotate(270deg)" },
+                "100%": { transform: "translateZ(0) rotate(360deg)" },
+              },
+              "spin-continuous": {
+                "0%": { transform: "translateZ(0) rotate(0deg)" },
                 "100%": { transform: "translateZ(0) rotate(360deg)" },
               },
               "shimmer-slide": {

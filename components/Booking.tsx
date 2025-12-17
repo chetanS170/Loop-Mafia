@@ -68,9 +68,36 @@ const Booking: React.FC = () => {
              {/* Card Highlight */}
              <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-             <div className="mb-8 relative inline-block">
-                <div className="w-20 h-20 bg-gradient-to-tr from-wheat to-clay rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(196,164,132,0.3)] mb-2 mx-auto">
-                   <Calendar className="w-8 h-8 text-charcoal" strokeWidth={2.5} />
+             <div className="mb-8 relative flex justify-center">
+                {/* Shimmer Icon Container - Matches Hero CTA Style but continuous loop */}
+                <div 
+                  className="group relative z-0 flex items-center justify-center w-24 h-24 rounded-full overflow-hidden shadow-2xl"
+                  style={{
+                    "--spread": "90deg",
+                    "--shimmer-color": "#C4A484",
+                    "--radius": "100%",
+                    "--speed": "3s",
+                    "--cut": "0.1em",
+                    "--bg": "#2C2C2C",
+                  } as React.CSSProperties}
+                >
+                   {/* spark container */}
+                   <div className="-z-30 blur-[2px] absolute inset-0 overflow-visible [container-type:size]">
+                      <div className="absolute inset-0 h-[100cqh] [aspect-ratio:1] [border-radius:0] [mask:none]">
+                         <div 
+                           className="absolute -inset-full w-auto rotate-0 animate-spin-continuous [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]" 
+                         />
+                      </div>
+                   </div>
+
+                   {/* Icon */}
+                   <Calendar className="w-10 h-10 text-clay drop-shadow-md relative z-10" strokeWidth={2} />
+
+                   {/* Highlight */}
+                   <div className="absolute inset-0 rounded-full shadow-[inset_0_-8px_10px_#ffffff1f] transform-gpu" />
+
+                   {/* backdrop */}
+                   <div className="absolute -z-20 [background:var(--bg)] [border-radius:var(--radius)] [inset:var(--cut)]" />
                 </div>
              </div>
 
@@ -87,8 +114,6 @@ const Booking: React.FC = () => {
              >
                 <span className="font-bold tracking-wide z-10">Book Discovery Call</span>
                 <ArrowRight className="w-5 h-5 z-10 group-hover:translate-x-1 transition-transform duration-200" />
-                
-                {/* Subtle fill effect on hover if desired, or rely on simple bg change */}
              </a>
 
              <p className="mt-6 text-xs text-white/30">
