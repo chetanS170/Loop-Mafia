@@ -41,6 +41,8 @@
               'scroll-reverse': 'scroll-reverse 40s linear infinite',
               'scroll-x': 'scroll-x 80s linear infinite',
               'scroll-x-reverse': 'scroll-x-reverse 80s linear infinite',
+              "shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate",
+              "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
             },
             keyframes: {
               float: {
@@ -62,7 +64,16 @@
               'scroll-x-reverse': {
                 '0%': { transform: 'translateX(-50%)' },
                 '100%': { transform: 'translateX(0)' },
-              }
+              },
+              "spin-around": {
+                "0%": { transform: "translateZ(0) rotate(0)" },
+                "15%, 35%": { transform: "translateZ(0) rotate(90deg)" },
+                "65%, 85%": { transform: "translateZ(0) rotate(270deg)" },
+                "100%": { transform: "translateZ(0) rotate(360deg)" },
+              },
+              "shimmer-slide": {
+                to: { transform: "translate(calc(100cqw - 100%), 0)" },
+              },
             }
           }
         }
@@ -125,7 +136,9 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
     "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25",
-    "lenis": "https://aistudiocdn.com/lenis@1.1.20"
+    "lenis": "https://aistudiocdn.com/lenis@1.1.20",
+    "clsx": "https://aistudiocdn.com/clsx@^2.1.1",
+    "tailwind-merge": "https://aistudiocdn.com/tailwind-merge@^2.5.5"
   }
 }
 </script>

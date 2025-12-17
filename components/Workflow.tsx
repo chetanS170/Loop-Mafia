@@ -120,7 +120,8 @@ const Workflow: React.FC = () => {
         </div>
 
         {/* --- DESKTOP CIRCULAR LAYOUT --- */}
-        <div className="hidden lg:flex justify-center items-center relative h-[650px]">
+        {/* Scaled for responsiveness on laptops (lg) and restored on larger screens (xl) */}
+        <div className="hidden lg:flex justify-center items-center relative h-[650px] lg:scale-90 xl:scale-100 transition-transform duration-500">
            {/* The Orbit Container */}
            <div className="relative w-[600px] h-[600px]">
               
@@ -131,7 +132,7 @@ const Workflow: React.FC = () => {
               </svg>
 
               {/* Central Content Hub */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 flex flex-col items-center justify-center text-center p-8 shadow-2xl z-10">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 flex flex-col items-center justify-center text-center p-8 shadow-2xl z-10 overflow-hidden">
                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activeStep}
@@ -139,16 +140,16 @@ const Workflow: React.FC = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.1 }}
                       transition={{ duration: 0.3 }}
-                      className="flex flex-col items-center"
+                      className="flex flex-col items-center w-full"
                     >
-                       <div className="text-xs font-bold uppercase tracking-widest text-clay mb-3">{steps[activeStep].goal}</div>
-                       <h3 className="font-serif text-3xl md:text-4xl text-charcoal dark:text-wheat mb-4 leading-tight">{steps[activeStep].title}</h3>
-                       <p className="text-charcoal/70 dark:text-white/60 text-sm leading-relaxed mb-6 max-w-[280px]">
+                       <div className="text-[10px] lg:text-xs font-bold uppercase tracking-widest text-clay mb-2 lg:mb-3">{steps[activeStep].goal}</div>
+                       <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl text-charcoal dark:text-wheat mb-2 lg:mb-4 leading-tight">{steps[activeStep].title}</h3>
+                       <p className="text-charcoal/70 dark:text-white/60 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6 max-w-[260px] lg:max-w-[280px]">
                           {steps[activeStep].description}
                        </p>
-                       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/5 dark:border-white/10">
-                          <CheckCircle2 size={14} className="text-clay" />
-                          <span className="text-xs font-bold text-charcoal dark:text-cream">{steps[activeStep].deliverable}</span>
+                       <div className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/5 dark:border-white/10">
+                          <CheckCircle2 size={12} className="text-clay lg:w-[14px] lg:h-[14px]" />
+                          <span className="text-[10px] lg:text-xs font-bold text-charcoal dark:text-cream">{steps[activeStep].deliverable}</span>
                        </div>
                     </motion.div>
                  </AnimatePresence>

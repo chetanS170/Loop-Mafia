@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { HeroGridBackground } from './ui/hero-grid-background';
+import { ShimmerButton } from './ui/shimmer-button';
 
 interface HeroProps {
   toggleTheme: () => void;
@@ -92,19 +93,16 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <a 
-            href="#process"
-            className={`
-              group relative px-10 py-4 rounded-full overflow-hidden transition-all duration-200 inline-flex items-center gap-3 font-bold text-lg tracking-wide border hover:scale-105
-              ${isDark 
-                ? 'bg-transparent border-wheat/30 text-wheat hover:bg-wheat hover:text-charcoal' 
-                : 'bg-transparent border-charcoal/30 text-charcoal hover:bg-charcoal hover:text-wheat'
-              }
-            `}
+          <ShimmerButton 
+            className="shadow-2xl hover:scale-105 hover:px-10 transition-all duration-300 ease-out" 
+            shimmerColor="#C4A484"
+            background={isDark ? "rgba(26, 26, 26, 1)" : "#2C2C2C"}
+            onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}
           >
-             <span className="relative z-20">See Our Process</span>
-             <ArrowRight className="w-5 h-5 relative z-20 group-hover:translate-x-1 transition-transform duration-200" />
-          </a>
+            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight lg:text-lg flex items-center gap-2 text-white">
+              See Our Process <ArrowRight className="w-5 h-5" />
+            </span>
+          </ShimmerButton>
         </motion.div>
       </div>
     </section>
