@@ -29,7 +29,7 @@ function App() {
       <main>
         <Hero toggleTheme={toggleTheme} isDark={isDark} />
         <Services />
-        <Workflow />
+        <Workflow isDark={isDark} />
         <CaseStudies />
         <Testimonials />
         <Booking />

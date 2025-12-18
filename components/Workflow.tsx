@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { 
   ClipboardCheck, FileText, Sparkles, Rocket, TrendingUp, 
-  CheckCircle2, ArrowRight
+  CheckCircle2, Zap, ArrowDown, ArrowRight
 } from 'lucide-react';
+import { cn } from '../lib/utils';
+import { ShimmerButton } from './ui/shimmer-button';
 
 interface Step {
   id: string;
@@ -22,29 +24,29 @@ const steps: Step[] = [
     stepNumber: '01',
     label: 'Validate',
     icon: ClipboardCheck,
-    title: 'Validation First',
-    goal: 'Clarify before coding',
-    description: 'We don’t just build; we strategize. We define the problem, the user, and the core features to ensure we build exactly what you need.',
+    title: 'Strategy & Audit',
+    goal: 'Defining the North Star',
+    description: 'We analyze your current bottlenecks and map out a high-impact automation roadmap tailored to your ROI goals.',
     deliverable: 'Strategy Blueprint'
   },
   {
-    id: 'brief',
+    id: 'blueprint',
     stepNumber: '02',
-    label: 'Briefing',
+    label: 'Blueprint',
     icon: FileText,
-    title: 'The Blueprint',
-    goal: 'Context for the AI',
-    description: 'We create a detailed technical and design brief. This ensures the AI models we use generate high-quality, on-brand code.',
+    title: 'System Architecture',
+    goal: 'Context-First Design',
+    description: 'Detailed technical mapping of data flows and AI prompt engineering to ensure seamless integration.',
     deliverable: 'Technical Spec'
   },
   {
-    id: 'generate',
+    id: 'build',
     stepNumber: '03',
-    label: 'Generate',
+    label: 'Build',
     icon: Sparkles,
-    title: 'Rapid Build',
-    goal: 'Functional Prototype',
-    description: 'Using advanced AI, we generate 80% of the code instantly. Our engineers then refine and perfect the functionality.',
+    title: 'Rapid Engineering',
+    goal: 'AI-Accelerated Dev',
+    description: 'Leveraging our proprietary AI engine to generate core logic while our engineers perfect the nuances.',
     deliverable: 'Working Prototype'
   },
   {
@@ -52,206 +54,255 @@ const steps: Step[] = [
     stepNumber: '04',
     label: 'Deploy',
     icon: Rocket,
-    title: 'Go Live',
+    title: 'Precision Launch',
     goal: 'Production Ready',
-    description: 'We polish the UI, optimize for mobile, secure the database, and launch your product to the world.',
-    deliverable: 'Live Website'
+    description: 'Rigorous testing and security hardening before moving your automation into the live environment.',
+    deliverable: 'Live Deployment'
   },
   {
-    id: 'feedback',
+    id: 'scale',
     stepNumber: '05',
-    label: 'Evolve',
+    label: 'Scale',
     icon: TrendingUp,
-    title: 'Grow & Scale',
-    goal: 'Data-Driven Growth',
-    description: 'We analyze user behavior and iterate. Software is never finished; it evolves with your business.',
-    deliverable: 'Growth Plan'
+    title: 'Continuous Growth',
+    goal: 'Iteration & Insight',
+    description: 'Ongoing performance monitoring and improvements based on real-world data to maximize efficiency.',
+    deliverable: 'Growth Roadmap'
   }
 ];
 
-const Workflow: React.FC = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  // Auto-rotate steps if user hasn't interacted recently
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
-
-  const handleStepClick = (index: number) => {
-    setActiveStep(index);
-    setIsAutoPlaying(false);
-  };
-
+const WorkflowStep: React.FC<{ 
+  step: Step; 
+  index: number; 
+  isEven: boolean;
+}> = ({ step, index, isEven }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.35 });
+  
   return (
-    <section id="process" className="py-24 md:py-32 px-4 md:px-6 bg-cream dark:bg-[#0A0A0A] relative overflow-hidden transition-colors duration-500">
+    <div 
+      ref={ref}
+      className={cn(
+        "workflow-step relative flex items-center w-full min-h-[300px] md:min-h-[400px] py-12 md:py-0",
+        isEven ? "md:flex-row" : "md:flex-row-reverse"
+      )}
+    >
+      {/* 1. Content Area with Quick Sliding Animation */}
+      <div className={cn(
+        "w-full md:w-1/2 pl-14 md:pl-0",
+        isEven ? "md:pr-16 lg:pr-24" : "md:pl-16 lg:pl-24"
+      )}>
+        <motion.div
+          initial={{ opacity: 0, x: isEven ? -60 : 60 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -60 : 60 }}
+          transition={{ 
+            type: "spring",
+            stiffness: 280,
+            damping: 28,
+            mass: 0.5,
+            delay: 0.05
+          }}
+          className={cn(
+            "flex flex-col p-8 md:p-10 rounded-[2rem] transition-all duration-500",
+            isInView 
+              ? "bg-white/80 dark:bg-white/5 backdrop-blur-2xl border border-clay/30 shadow-2xl shadow-clay/5" 
+              : "opacity-10 grayscale blur-[4px]",
+            !isEven ? "md:items-start" : "md:items-end md:text-right"
+          )}
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-clay mb-3">
+            Phase {step.stepNumber} // {step.goal}
+          </span>
+          <h3 className="font-serif text-2xl md:text-4xl text-charcoal dark:text-wheat mb-4 tracking-tight">
+            {step.title}
+          </h3>
+          <p className="text-charcoal/70 dark:text-white/60 text-sm md:text-base leading-relaxed mb-8 max-w-sm font-medium">
+            {step.description}
+          </p>
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10">
+             <motion.div
+              animate={isInView ? { scale: [1, 1.3, 1], rotate: [0, 15, -15, 0] } : {}}
+              transition={{ repeat: isInView ? Infinity : 0, duration: 1.8 }}
+             >
+              <CheckCircle2 size={14} className={isInView ? "text-clay" : "text-charcoal/20"} />
+             </motion.div>
+             <span className="text-[10px] font-bold text-charcoal/80 dark:text-cream uppercase tracking-[0.15em]">{step.deliverable}</span>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* 2. Interactive Node (Center) */}
+      <div className="absolute left-4 md:left-1/2 -translate-x-1/2 z-20">
+        <motion.div
+          animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0.2 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="relative w-12 h-12 md:w-24 md:h-24 rounded-full flex items-center justify-center cursor-default"
+        >
+          {/* Shimmer / Glow */}
+          <AnimatePresence>
+            {isInView && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.3 }}
+                className="absolute inset-0 z-0"
+              >
+                <div 
+                  className="absolute inset-0 rounded-full animate-spin-continuous"
+                  style={{
+                    "--spread": "120deg",
+                    "--shimmer-color": "#C4A484",
+                    "--speed": "2.2s",
+                    "background": "conic-gradient(from 0deg, transparent 0deg, var(--shimmer-color) 40deg, transparent 120deg)"
+                  } as React.CSSProperties}
+                />
+                <div className="absolute inset-0 bg-clay/30 rounded-full blur-2xl animate-pulse" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Background Plate */}
+          <div className={cn(
+            "absolute inset-[3px] md:inset-[4px] rounded-full transition-all duration-700 z-10 shadow-lg",
+            isInView 
+              ? "bg-charcoal dark:bg-dark-card border border-clay/50 shadow-[inset_0_2px_15px_rgba(255,255,255,0.1)]" 
+              : "bg-wheat/30 dark:bg-white/5 border border-charcoal/5 dark:border-white/5"
+          )} />
+
+          {/* Icon */}
+          <div className="relative z-20">
+            <motion.div
+              animate={isInView ? { 
+                rotate: [0, -10, 10, 0],
+                scale: [1, 1.1, 1],
+                y: [0, -2, 0]
+              } : {}}
+              transition={{ repeat: isInView ? Infinity : 0, duration: 3, ease: "easeInOut" }}
+            >
+              <step.icon 
+                size={isInView ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 24 : 36) : 20} 
+                className={cn(
+                  "transition-all duration-700",
+                  isInView 
+                    ? "text-wheat drop-shadow-[0_0_12px_rgba(227,213,202,0.8)]" 
+                    : "text-charcoal/10 dark:text-white/10"
+                )} 
+              />
+            </motion.div>
+          </div>
+
+          {/* Step Number Badge */}
+          <div className={cn(
+            "absolute -top-1 -right-1 w-5 h-5 md:w-7 md:h-7 rounded-full flex items-center justify-center text-[8px] md:text-[10px] font-black z-30 transition-all duration-500 shadow-xl",
+            isInView 
+              ? "bg-clay text-white scale-110" 
+              : "bg-charcoal/5 dark:bg-white/5 text-charcoal/10 dark:text-white/5"
+          )}>
+            {step.stepNumber}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* 3. Empty Placeholder (Desktop) */}
+      <div className="hidden md:block md:w-1/2" />
+    </div>
+  );
+};
+
+const Workflow: React.FC<{ isDark?: boolean }> = ({ isDark = true }) => {
+  return (
+    <section 
+      id="process" 
+      className="py-24 md:py-48 bg-cream dark:bg-deep-night relative transition-colors duration-500 overflow-hidden"
+    >
+      {/* Background Decor */}
+      <div className="absolute top-0 left-4 md:left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-clay/20 to-transparent pointer-events-none" />
       
-      {/* Background Ambience */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-wheat/10 dark:bg-wheat/5 rounded-full blur-[150px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16 md:mb-24">
+      {/* Enhanced Ambient Glows */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-clay/5 rounded-full blur-[80px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-wheat/5 rounded-full blur-[80px] md:blur-[140px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-6 relative">
+        
+        {/* Header Section */}
+        <div className="text-center mb-24 md:mb-40">
           <motion.div 
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 mb-4"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-clay animate-pulse" />
-            <span className="text-clay font-bold tracking-[0.2em] text-[10px] uppercase">
-              The Engine
-            </span>
+             <Zap size={14} className="text-clay fill-clay" />
+             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-charcoal/60 dark:text-wheat/80">
+               Operational Lifecycle
+             </span>
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-serif text-4xl md:text-6xl text-charcoal dark:text-cream mb-6"
+            className="font-serif text-4xl md:text-6xl text-charcoal dark:text-cream mb-6 tracking-tight"
           >
-            How We <span className="text-clay italic">Build Fast</span>
+            How we <span className="text-clay italic">Work</span>
           </motion.h2>
-          <p className="text-charcoal/60 dark:text-white/40 max-w-lg mx-auto font-medium">
-            A cyclical process of rapid iteration and deployment.
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col items-center gap-2.5 text-charcoal/30 dark:text-white/20"
+          >
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Scroll to witness the flow</span>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 2.2 }}
+            >
+              <ArrowDown size={14} />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Timeline Container */}
+        <div className="relative space-y-16 md:space-y-32">
+          {/* Central Connecting Line */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 z-0">
+             <div className="absolute inset-0 bg-gradient-to-b from-clay/40 via-clay/10 to-transparent" />
+          </div>
+
+          {/* Mapping Steps */}
+          {steps.map((step, index) => (
+            <WorkflowStep 
+              key={step.id} 
+              step={step} 
+              index={index} 
+              isEven={index % 2 === 0} 
+            />
+          ))}
+        </div>
+
+        {/* Footer Callout */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-40 md:mt-56 text-center flex flex-col items-center"
+        >
+          <div className="w-16 md:w-24 h-px bg-clay mx-auto mb-10 md:mb-14 opacity-40" />
+          <p className="text-charcoal/70 dark:text-white/50 text-xl md:text-2xl font-serif tracking-wide italic max-w-3xl mx-auto leading-relaxed px-6 mb-16">
+            "If you’re ready to replace friction with leverage, let’s design automation that works harder than any team ever could."
           </p>
-        </div>
-
-        {/* --- DESKTOP CIRCULAR LAYOUT --- */}
-        {/* Scaled for responsiveness on laptops (lg) and restored on larger screens (xl) */}
-        <div className="hidden lg:flex justify-center items-center relative h-[650px] lg:scale-90 xl:scale-100 transition-transform duration-500">
-           {/* The Orbit Container */}
-           <div className="relative w-[600px] h-[600px]">
-              
-              {/* Connecting Ring (SVG) */}
-              <svg className="absolute inset-0 w-full h-full rotate-[-90deg]" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.2" className="text-charcoal/20 dark:text-white/10" />
-                <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 3" className="text-charcoal/10 dark:text-white/20" />
-              </svg>
-
-              {/* Central Content Hub */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 flex flex-col items-center justify-center text-center p-8 shadow-2xl z-10 overflow-hidden">
-                 <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeStep}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col items-center w-full"
-                    >
-                       <div className="text-[10px] lg:text-xs font-bold uppercase tracking-widest text-clay mb-2 lg:mb-3">{steps[activeStep].goal}</div>
-                       <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl text-charcoal dark:text-wheat mb-2 lg:mb-4 leading-tight">{steps[activeStep].title}</h3>
-                       <p className="text-charcoal/70 dark:text-white/60 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6 max-w-[260px] lg:max-w-[280px]">
-                          {steps[activeStep].description}
-                       </p>
-                       <div className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full bg-charcoal/5 dark:bg-white/5 border border-charcoal/5 dark:border-white/10">
-                          <CheckCircle2 size={12} className="text-clay lg:w-[14px] lg:h-[14px]" />
-                          <span className="text-[10px] lg:text-xs font-bold text-charcoal dark:text-cream">{steps[activeStep].deliverable}</span>
-                       </div>
-                    </motion.div>
-                 </AnimatePresence>
-              </div>
-
-              {/* Orbiting Nodes */}
-              {steps.map((step, index) => {
-                 const angle = (index * 360) / steps.length - 90; // -90 to start at top
-                 const radius = 280; // Distance from center
-                 const isActive = index === activeStep;
-                 
-                 // Convert angle to radians for positioning
-                 const radian = (angle * Math.PI) / 180;
-                 const x = Math.cos(radian) * radius;
-                 const y = Math.sin(radian) * radius;
-
-                 return (
-                    <motion.button
-                       key={step.id}
-                       onClick={() => handleStepClick(index)}
-                       className={`absolute w-16 h-16 rounded-full flex items-center justify-center border transition-all duration-500 z-20 group outline-none
-                         ${isActive 
-                           ? 'bg-clay border-clay text-white shadow-[0_0_30px_rgba(196,164,132,0.4)] scale-110' 
-                           : 'bg-charcoal border-white/10 text-wheat shadow-[inset_0_-2px_4px_rgba(255,255,255,0.1)] hover:border-clay hover:text-clay'
-                         }
-                       `}
-                       style={{
-                          left: `calc(50% + ${x}px - 32px)`, // 32px is half width
-                          top: `calc(50% + ${y}px - 32px)`,
-                       }}
-                       whileHover={{ scale: 1.1 }}
-                    >
-                       <step.icon size={24} />
-                       
-                       {/* Label Floating Outside */}
-                       <div 
-                         className={`absolute whitespace-nowrap text-sm font-bold tracking-wider transition-all duration-300
-                           ${isActive ? 'opacity-100 text-charcoal dark:text-wheat translate-y-0' : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 text-charcoal/60 dark:text-white/60'}
-                         `}
-                         style={{
-                            top: y < 0 ? '-30px' : 'auto',
-                            bottom: y > 0 ? '-30px' : 'auto',
-                            left: x < 0 ? 'auto' : '50%',
-                            right: x > 0 ? 'auto' : '50%',
-                            transform: `translateX(${x === 0 ? '-50%' : x > 0 ? '0' : '0'})` // Simplify label placement logic or just standard center
-                         }}
-                       >
-                          {/* Simplified positioning for labels to avoid complex logic */}
-                          <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white dark:bg-charcoal px-2 py-1 rounded shadow-sm">
-                             {step.label}
-                          </span>
-                       </div>
-                    </motion.button>
-                 );
-              })}
-           </div>
-        </div>
-
-        {/* --- MOBILE/TABLET VERTICAL LAYOUT --- */}
-        <div className="lg:hidden flex flex-col gap-8 relative">
-           {/* Vertical Line */}
-           <div className="absolute left-8 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-charcoal/10 dark:via-white/10 to-transparent" />
-
-           {steps.map((step, index) => {
-             const isActive = activeStep === index;
-             return (
-               <div 
-                  key={step.id} 
-                  className={`relative pl-24 pr-4 py-4 rounded-3xl transition-all duration-500
-                    ${isActive ? 'bg-white/50 dark:bg-white/5 border border-white/20 shadow-lg' : 'opacity-70'}
-                  `}
-                  onClick={() => handleStepClick(index)}
-               >
-                  {/* Node on Line - Updated to match premium dark style */}
-                  <div className={`absolute left-4 top-8 w-8 h-8 rounded-full flex items-center justify-center border transition-colors duration-300 z-10
-                     ${isActive 
-                       ? 'bg-clay border-clay text-white shadow-lg' 
-                       : 'bg-charcoal border-white/10 text-wheat shadow-[inset_0_-2px_4px_rgba(255,255,255,0.1)]'}
-                  `}>
-                     <span className="text-xs font-bold">{step.stepNumber}</span>
-                  </div>
-
-                  <div className="mb-2 flex items-center gap-3">
-                     <h3 className={`font-serif text-2xl ${isActive ? 'text-charcoal dark:text-wheat' : 'text-charcoal/60 dark:text-white/50'}`}>
-                       {step.title}
-                     </h3>
-                     {isActive && <div className="h-px flex-grow bg-clay/30" />}
-                  </div>
-
-                  <p className="text-charcoal/70 dark:text-white/60 text-sm leading-relaxed mb-4">
-                     {step.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-clay">
-                     <CheckCircle2 size={14} />
-                     {step.deliverable}
-                  </div>
-               </div>
-             );
-           })}
-        </div>
-
+          
+          <ShimmerButton 
+            className="shadow-xl hover:scale-105 hover:px-10 transition-all duration-300 ease-out" 
+            shimmerColor="#C4A484"
+            background={isDark ? "rgba(26, 26, 26, 1)" : "#2C2C2C"}
+            onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="whitespace-pre-wrap text-center text-sm font-semibold leading-none tracking-tight md:text-lg flex items-center gap-2.5 text-white">
+              Start Your Automation Journey <ArrowRight className="w-5 h-5" />
+            </span>
+          </ShimmerButton>
+        </motion.div>
       </div>
     </section>
   );
