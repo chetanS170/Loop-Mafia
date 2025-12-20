@@ -128,10 +128,8 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
       viewport={{ once: true }}
       transition={{ delay: item.delay, duration: 0.5 }}
       className={`relative flex flex-col p-8 md:p-10 rounded-[2.5rem] transition-all duration-300 group h-full
-        ${isPopular 
-          ? 'bg-charcoal dark:bg-[#1A1A1A] text-cream dark:text-white lg:-mt-8 lg:mb-8 border-2 border-clay shadow-2xl shadow-clay/20 z-10' 
-          : 'bg-white dark:bg-[#141414] text-charcoal dark:text-white border border-wheat/30 dark:border-white/10 shadow-xl shadow-clay/5 hover:border-clay/50 hover:shadow-2xl hover:shadow-clay/10'
-        }
+        bg-white dark:bg-[#141414] text-charcoal dark:text-white border border-wheat/30 dark:border-white/10 shadow-xl shadow-clay/5 hover:border-clay/50 hover:shadow-2xl hover:shadow-clay/10
+        ${isPopular ? 'lg:-mt-8 lg:mb-8 border-2 border-clay shadow-2xl shadow-clay/20 z-10' : ''}
       `}
     >
       {/* Popular Badge */}
@@ -152,26 +150,26 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
           <item.icon size={28} className="drop-shadow-md" />
         </div>
         
-        <h3 className={`font-serif text-3xl mb-2 ${isPopular ? 'text-wheat' : 'text-charcoal dark:text-wheat'}`}>
+        <h3 className={`font-serif text-3xl mb-2 text-charcoal dark:text-wheat transition-colors`}>
           {item.headline}
         </h3>
         <p className={`text-xs font-bold uppercase tracking-widest mb-4 opacity-60`}>
           {item.category}
         </p>
-        <p className={`leading-relaxed text-base ${isPopular ? 'text-white/80' : 'text-charcoal/70 dark:text-white/60'}`}>
+        <p className={`leading-relaxed text-base text-charcoal/70 dark:text-white/60`}>
           {item.description}
         </p>
       </div>
 
       {/* Divider */}
-      <div className={`h-px w-full mb-6 ${isPopular ? 'bg-white/10' : 'bg-charcoal/5 dark:bg-white/5'}`} />
+      <div className={`h-px w-full mb-6 bg-charcoal/5 dark:bg-white/5`} />
 
       {/* Features List */}
       <ul className="space-y-3 mb-8 flex-grow">
         {item.features.map((feature, idx) => (
           <li key={idx} className="flex items-start gap-3">
-            <Check size={18} className={`mt-0.5 flex-shrink-0 ${isPopular ? 'text-clay' : 'text-clay'}`} />
-            <span className={`text-sm font-medium ${isPopular ? 'text-white/90' : 'text-charcoal/80 dark:text-white/80'}`}>
+            <Check size={18} className={`mt-0.5 flex-shrink-0 text-clay`} />
+            <span className={`text-sm font-medium text-charcoal/80 dark:text-white/80`}>
               {feature}
             </span>
           </li>
@@ -183,10 +181,7 @@ const ServiceCard: React.FC<{ item: ServiceItem }> = ({ item }) => {
         <a 
           href="#booking"
           className={`w-full py-3.5 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-200 border hover:scale-105
-            ${isPopular 
-              ? 'bg-transparent border-wheat/50 text-wheat hover:bg-wheat hover:text-charcoal' 
-              : 'bg-transparent border-charcoal/10 dark:border-white/10 hover:bg-charcoal dark:hover:bg-wheat text-charcoal dark:text-white hover:text-wheat dark:hover:text-charcoal'
-            }`}
+            bg-transparent border-charcoal/10 dark:border-white/10 hover:bg-charcoal dark:hover:bg-wheat text-charcoal dark:text-white hover:text-wheat dark:hover:text-charcoal`}
         >
           {item.cta}
           <ArrowRight size={18} />

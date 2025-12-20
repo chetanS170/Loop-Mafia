@@ -11,7 +11,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-32 md:pt-48 pb-20 md:pb-32 bg-cream dark:bg-deep-night transition-colors duration-500">
+    <section className="relative w-full min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 pb-16 md:pb-24 bg-cream dark:bg-deep-night transition-colors duration-500">
       
       {/* Background Ambience & Grid */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -22,41 +22,41 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
         {/* Noise Texture Overlay */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light" />
         
-        {/* Infinite Grid System - Placed AFTER noise to pop more */}
+        {/* Infinite Grid System */}
         <HeroGridBackground />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 text-center flex flex-col items-center">
         
-        {/* Toggle Button - No Glow, Solid, Scalable */}
+        {/* Toggle Button - Smaller, less margin */}
         <motion.button
           onClick={toggleTheme}
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 md:mb-12 cursor-pointer"
+          className="mb-4 md:mb-6 cursor-pointer"
           aria-label="Toggle dark mode"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <div className={`
-            flex items-center gap-3 px-4 py-2.5 
+            flex items-center gap-2 px-3 py-1.5 
             rounded-full transition-colors duration-200 border
             ${isDark 
-              ? 'bg-charcoal border-white/20 text-wheat' 
+              ? 'bg-charcoal border-white/10 text-wheat' 
               : 'bg-white border-charcoal/10 text-charcoal'
             }
           `}>
-             <span className="text-xs font-bold tracking-[0.25em] uppercase px-2 transition-colors duration-200 opacity-80">
-               {isDark ? 'Dark Mode' : 'Light Mode'}
+             <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-1 transition-colors duration-200 opacity-60">
+               {isDark ? 'Dark' : 'Light'}
              </span>
-             <div className="relative w-12 h-7 bg-black/10 dark:bg-black/30 rounded-full p-1 transition-colors duration-200">
+             <div className="relative w-8 h-4 bg-black/10 dark:bg-black/30 rounded-full p-0.5 transition-colors duration-200">
                 <motion.div 
                   layout
                   transition={{ type: "spring", stiffness: 700, damping: 30 }}
-                  className={`w-5 h-5 rounded-full shadow-sm flex items-center justify-center ${isDark ? 'bg-wheat ml-auto' : 'bg-charcoal'}`}
+                  className={`w-3 h-3 rounded-full shadow-sm flex items-center justify-center ${isDark ? 'bg-wheat ml-auto' : 'bg-charcoal'}`}
                 >
-                   {isDark ? <Moon size={10} className="text-charcoal" /> : <Sun size={10} className="text-wheat" />}
+                   {isDark ? <Moon size={8} className="text-charcoal" /> : <Sun size={8} className="text-wheat" />}
                 </motion.div>
              </div>
           </div>
@@ -65,10 +65,10 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
         {/* Text Container with Shadows for Grid Separation */}
         <div className={`transition-all duration-300 ${isDark ? 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_20px_rgba(253,251,247,1)]'}`}>
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="font-serif text-5xl sm:text-6xl md:text-8xl leading-[1.1] text-charcoal dark:text-cream mb-8 tracking-tight"
+            className="font-serif text-4xl sm:text-6xl md:text-8xl leading-[1.1] text-charcoal dark:text-cream mb-6 tracking-tight"
           >
             Automate today. <br className="hidden md:block" />
             <span className="italic text-clay relative inline-block">
@@ -78,10 +78,10 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-sans text-lg md:text-2xl text-charcoal/90 dark:text-wheat/90 max-w-2xl mx-auto mb-12 leading-relaxed font-medium px-4"
+            className="font-sans text-base md:text-xl text-charcoal/50 dark:text-wheat/50 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed font-medium px-4"
           >
             Loop Mafia transforms manual chaos into automated order. 
             We develop custom AI agents and software in weeks, not months.
@@ -89,12 +89,12 @@ const Hero: React.FC<HeroProps> = ({ toggleTheme, isDark }) => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <ShimmerButton 
-            className="shadow-2xl hover:scale-105 hover:px-10 transition-all duration-300 ease-out" 
+            className="shadow-xl hover:scale-105 hover:px-10 transition-all duration-300 ease-out" 
             shimmerColor="#C4A484"
             background={isDark ? "rgba(26, 26, 26, 1)" : "#2C2C2C"}
             onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}

@@ -20,54 +20,54 @@ interface Step {
 
 const steps: Step[] = [
   {
-    id: 'validate',
+    id: 'consult',
     stepNumber: '01',
-    label: 'Validate',
+    label: 'Consult',
     icon: ClipboardCheck,
-    title: 'Strategy & Audit',
-    goal: 'Defining the North Star',
-    description: 'We analyze your current bottlenecks and map out a high-impact automation roadmap tailored to your ROI goals.',
-    deliverable: 'Strategy Blueprint'
+    title: 'Audit & Analysis',
+    goal: 'Find the Savings',
+    description: 'We look at your manual tasks and pinpoint exactly where AI can save you the most time and money.',
+    deliverable: 'Automation Map'
   },
   {
     id: 'blueprint',
     stepNumber: '02',
     label: 'Blueprint',
     icon: FileText,
-    title: 'System Architecture',
-    goal: 'Context-First Design',
-    description: 'Detailed technical mapping of data flows and AI prompt engineering to ensure seamless integration.',
-    deliverable: 'Technical Spec'
+    title: 'System Design',
+    goal: 'Plan the Flow',
+    description: 'We map out how your apps will talk to each other and how the AI will handle your data step-by-step.',
+    deliverable: 'Workflow Logic'
   },
   {
     id: 'build',
     stepNumber: '03',
     label: 'Build',
     icon: Sparkles,
-    title: 'Rapid Engineering',
-    goal: 'AI-Accelerated Dev',
-    description: 'Leveraging our proprietary AI engine to generate core logic while our engineers perfect the nuances.',
-    deliverable: 'Working Prototype'
+    title: 'Development',
+    goal: 'Create the Tech',
+    description: 'Our team builds your custom AI agents and integrates them directly into your current business tools.',
+    deliverable: 'Working System'
   },
   {
     id: 'deploy',
     stepNumber: '04',
     label: 'Deploy',
     icon: Rocket,
-    title: 'Precision Launch',
-    goal: 'Production Ready',
-    description: 'Rigorous testing and security hardening before moving your automation into the live environment.',
-    deliverable: 'Live Deployment'
+    title: 'Launch Day',
+    goal: 'Go Live',
+    description: 'We turn the system on, train your team on how to use it, and ensure everything is running perfectly.',
+    deliverable: 'Live Automation'
   },
   {
     id: 'scale',
     stepNumber: '05',
     label: 'Scale',
     icon: TrendingUp,
-    title: 'Continuous Growth',
-    goal: 'Iteration & Insight',
-    description: 'Ongoing performance monitoring and improvements based on real-world data to maximize efficiency.',
-    deliverable: 'Growth Roadmap'
+    title: 'Maintenance',
+    goal: 'Keep it Fast',
+    description: 'We monitor the performance and tweak the AI as your business grows to keep your overhead low.',
+    deliverable: 'Support Plan'
   }
 ];
 
