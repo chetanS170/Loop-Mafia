@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-6 inset-x-0 z-50 flex justify-center px-4"
       >
-        <div className={`relative flex items-center justify-between pl-4 pr-2 md:pl-6 py-2.5 transition-all duration-300 ease-out z-50
+        <div className={`relative flex items-center justify-between pl-4 pr-2 md:pl-6 py-2 transition-all duration-300 ease-out z-50
           ${mobileMenuOpen ? 'w-full max-w-[95%] bg-transparent' : 
           'bg-cream/90 dark:bg-[#1A1A1A]/90 shadow-2xl shadow-wheat/20 dark:shadow-black/40 backdrop-blur-xl border border-wheat/50 dark:border-white/5 rounded-full w-full max-w-5xl'}`}>
           
@@ -68,23 +68,23 @@ const Navbar: React.FC = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }} 
-            className={`flex items-center gap-2 md:gap-3 group ${mobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`flex items-center gap-3 ${mobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
-            <div className="relative w-10 h-10 flex-shrink-0 rounded-full overflow-hidden border border-wheat/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-inner transition-transform duration-300 group-hover:scale-105">
+            <div className="relative w-12 h-12 flex-shrink-0 rounded-full overflow-hidden border border-wheat/30 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-xl shadow-clay/40 dark:shadow-black/80 transition-shadow duration-300">
               {/* Light Mode Logo */}
               <img 
-                src="https://drive.google.com/thumbnail?id=15bFQO3-oMeZiZW94CQNQ2NcIziwfRvMT&sz=w200" 
+                src="https://i.ibb.co/LDRcRnTD/logo-light.jpg" 
                 alt="Loop Mafia" 
                 className="w-full h-full object-cover block dark:hidden"
               />
               {/* Dark Mode Logo */}
               <img 
-                src="https://drive.google.com/thumbnail?id=1YJyTiiUDxiE1ts2Zn4tKXnMmsu9GNwc0&sz=w200" 
+                src="https://i.ibb.co/Nnyf5sYN/logo-dark.jpg" 
                 alt="Loop Mafia" 
                 className="w-full h-full object-cover hidden dark:block"
               />
             </div>
-            <span className="font-serif text-lg md:text-xl font-normal tracking-tight text-charcoal dark:text-wheat transition-colors duration-200 whitespace-nowrap">
+            <span className="font-serif text-xl md:text-2xl font-normal tracking-tight text-charcoal dark:text-wheat transition-colors duration-200 whitespace-nowrap">
               Loop <span className="italic text-clay">Mafia</span>
             </span>
           </a>
